@@ -6,6 +6,7 @@ export interface Book {
   isbn: string;
   category: string;
   subject: string;
+  department?: string;
   publisher: string;
   edition: string;
   publicationYear: number;
