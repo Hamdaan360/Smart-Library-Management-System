@@ -1,0 +1,168 @@
+{
+  "version": "1.0",
+  "entities": {
+    "books": {
+      "fields": {
+        "bookId": { "type": "string" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "isbn": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "publisher": { "type": "string" },
+        "edition": { "type": "string" },
+        "publicationYear": { "type": "number" },
+        "shelfNumber": { "type": "string" },
+        "description": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "totalCopies": { "type": "number" },
+        "availableCopies": { "type": "number" },
+        "issuedCopies": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "students": {
+      "fields": {
+        "studentId": { "type": "string" },
+        "rollNumber": { "type": "string" },
+        "name": { "type": "string" },
+        "stream": { "type": "string" },
+        "classYear": { "type": "string" },
+        "division": { "type": "string" },
+        "email": { "type": "string" },
+        "mobile": { "type": "string" },
+        "profilePic": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "accountStatus": { "type": "string" },
+        "uid": { "type": "string" },
+        "registeredAt": { "type": "string" },
+        "password": { "type": "string" },
+        "isPhoneVerified": { "type": "boolean" },
+        "phoneVerifiedAt": { "type": "string" },
+        "lastLoginAt": { "type": "string" },
+        "lastLoginMethod": { "type": "string" },
+        "loginCount": { "type": "number" }
+      }
+    },
+    "admins": {
+      "fields": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "issues": {
+      "fields": {
+        "transactionId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentUid": { "type": "string" },
+        "studentName": { "type": "string" },
+        "rollNumber": { "type": "string" },
+        "bookId": { "type": "string" },
+        "bookDocId": { "type": "string" },
+        "bookTitle": { "type": "string" },
+        "adminId": { "type": "string" },
+        "adminName": { "type": "string" },
+        "issueDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "returnDate": { "type": "string" },
+        "status": { "type": "string" },
+        "fineAmount": { "type": "number" },
+        "overdueDays": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "reservations": {
+      "fields": {
+        "reservationId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentUid": { "type": "string" },
+        "studentName": { "type": "string" },
+        "bookId": { "type": "string" },
+        "bookDocId": { "type": "string" },
+        "bookTitle": { "type": "string" },
+        "requestDate": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "fines": {
+      "fields": {
+        "issueId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentUid": { "type": "string" },
+        "studentName": { "type": "string" },
+        "rollNumber": { "type": "string" },
+        "bookTitle": { "type": "string" },
+        "amount": { "type": "number" },
+        "overdueDays": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "notifications": {
+      "fields": {
+        "studentUid": { "type": "string" },
+        "studentId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "announcements": {
+      "fields": {
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "priority": { "type": "string" },
+        "createdDate": { "type": "string" },
+        "expiryDate": { "type": "string" }
+      }
+    },
+    "librarySettings": {
+      "fields": {
+        "collegeName": { "type": "string" },
+        "libraryName": { "type": "string" },
+        "maxBooksPerStudent": { "type": "number" },
+        "defaultLoanDurationDays": { "type": "number" },
+        "finePerDay": { "type": "number" },
+        "gracePeriodDays": { "type": "number" },
+        "maxFine": { "type": "number" },
+        "enableReservations": { "type": "boolean" },
+        "reservationDurationDays": { "type": "number" }
+      }
+    },
+    "activityLogs": {
+      "fields": {
+        "adminId": { "type": "string" },
+        "adminName": { "type": "string" },
+        "action": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "details": { "type": "string" },
+        "date": { "type": "string" },
+        "time": { "type": "string" }
+      }
+    },
+    "studentAuthLogs": {
+      "fields": {
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "email": { "type": "string" },
+        "mobile": { "type": "string" },
+        "action": { "type": "string" },
+        "method": { "type": "string" },
+        "status": { "type": "string" },
+        "ipDevice": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "details": { "type": "string" }
+      }
+    }
+  }
+}

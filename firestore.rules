@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'hamdaanai360@gmail.com'
+      );
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Library Settings: public read and administrative updates
+    match /librarySettings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // Books: full catalog access & inventory management
+    match /books/{bookId} {
+      allow read, write: if true;
+    }
+
+    // Announcements: broadcast notices
+    match /announcements/{announcementId} {
+      allow read, write: if true;
+    }
+
+    // Admins directory & profiles
+    match /admins/{adminId} {
+      allow read, write: if true;
+    }
+
+    // Students collection: roster verification, registration, profiles
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    // Issue transactions (circulation ledger)
+    match /issues/{issueId} {
+      allow read, write: if true;
+    }
+
+    // Book reservations
+    match /reservations/{reservationId} {
+      allow read, write: if true;
+    }
+
+    // Fines ledger
+    match /fines/{fineId} {
+      allow read, write: if true;
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Activity logs: circulation audit trail
+    match /activityLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Student Authentication & Login logs
+    match /studentAuthLogs/{logId} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Smart Library Management System",
+  "description": "Production-ready College Library Management System for Vidya Vikas Universal College featuring student verification, catalog search, book issue/return tracking, reservations, and fine management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
