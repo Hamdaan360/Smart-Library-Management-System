@@ -9,11 +9,7 @@ import {
   ArrowRight,
   Loader2,
   KeyRound,
-  Smartphone,
-  CheckCircle2,
-  AlertCircle,
 } from 'lucide-react';
-import { sendMobileOTP } from '../../lib/otpService';
 
 interface Props {
   isOpen: boolean;
@@ -23,19 +19,14 @@ interface Props {
 }
 
 export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'student', onSwitchToSignUp }) => {
-  const { loginStudent, loginStudentWithOTP, loginAdmin, sendResetEmail } = useAuth();
+  const { loginStudent, loginAdmin, sendResetEmail } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'student' | 'admin'>(initialRole);
-  const [studentAuthMode, setStudentAuthMode] = useState<'password' | 'otp'>('password');
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   // Form states - Empty by default (no auto-fill)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [otpCode, setOtpCode] = useState('');
-  const [otpDispatched, setOtpDispatched] = useState(false);
-  const [otpCooldown, setOtpCooldown] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -47,21 +38,11 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
       setActiveTab(initialRole);
       setEmail('');
       setPassword('');
-      setMobileNumber('');
-      setOtpCode('');
-      setOtpDispatched(false);
       setErrorMessage('');
       setSuccessMessage('');
       setIsForgotPassword(false);
     }
   }, [isOpen, initialRole]);
-
-  useEffect(() => {
-    if (otpCooldown > 0) {
-      const timer = setInterval(() => setOtpCooldown((c) => c - 1), 1000);
-      return () => clearInterval(timer);
-    }
-  }, [otpCooldown]);
 
   if (!isOpen) return null;
 
@@ -72,28 +53,6 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
     setIsForgotPassword(false);
     setEmail('');
     setPassword('');
-    setMobileNumber('');
-    setOtpCode('');
-    setOtpDispatched(false);
-  };
-
-  const handleSendOtp = () => {
-    setErrorMessage('');
-    setSuccessMessage('');
-    const cleanDigits = mobileNumber.replace(/\D/g, '').slice(-10);
-    if (cleanDigits.length !== 10) {
-      setErrorMessage('Kripya apna 10-digit registered mobile number dalein.');
-      return;
-    }
-
-    try {
-      const res = sendMobileOTP(cleanDigits, 'login');
-      setOtpDispatched(true);
-      setOtpCooldown(60);
-      setSuccessMessage(res.message);
-    } catch (err: any) {
-      setErrorMessage(err.message || 'OTP dispatch failed.');
-    }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -104,16 +63,7 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
 
     try {
       if (activeTab === 'student') {
-        if (studentAuthMode === 'otp') {
-          if (!otpDispatched) {
-            setErrorMessage('Kripya pehle "Send OTP" button dabayein.');
-            setLoading(false);
-            return;
-          }
-          await loginStudentWithOTP(mobileNumber, otpCode);
-        } else {
-          await loginStudent(email, password);
-        }
+        await loginStudent(email, password);
       } else {
         await loginAdmin(email, password);
       }
@@ -264,40 +214,6 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
                       </button>
                     </div>
                   </div>
-
-                  {/* Student Login Method Switcher */}
-                  <div className="flex rounded-xl bg-slate-100 p-1 border border-slate-200">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setStudentAuthMode('password');
-                        setErrorMessage('');
-                      }}
-                      className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-                        studentAuthMode === 'password'
-                          ? 'bg-white text-slate-900 shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      <Lock className="w-3.5 h-3.5" />
-                      Password Login
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setStudentAuthMode('otp');
-                        setErrorMessage('');
-                      }}
-                      className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
-                        studentAuthMode === 'otp'
-                          ? 'bg-white text-slate-900 shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      <Smartphone className="w-3.5 h-3.5 text-blue-600" />
-                      Mobile OTP Login
-                    </button>
-                  </div>
                 </>
               )}
 
@@ -313,115 +229,50 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
                 </div>
               )}
 
-              {/* Form Fields: Student OTP vs Password */}
-              {activeTab === 'student' && studentAuthMode === 'otp' ? (
-                <div className="space-y-3">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      Registered 10-Digit Mobile Number *
-                    </label>
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex-1">
-                        <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">
-                          +91
-                        </span>
-                        <input
-                          type="tel"
-                          required
-                          maxLength={10}
-                          value={mobileNumber}
-                          onChange={(e) => {
-                            setMobileNumber(e.target.value.replace(/\D/g, ''));
-                            if (otpDispatched) setOtpDispatched(false);
-                          }}
-                          placeholder="9876543210"
-                          className="w-full pl-11 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#071129] font-medium"
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleSendOtp}
-                        disabled={otpCooldown > 0 || mobileNumber.length !== 10}
-                        className="px-3.5 py-2 text-xs font-bold rounded-lg bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 transition-colors shrink-0 shadow-xs"
-                      >
-                        {otpCooldown > 0 ? `Resend (${otpCooldown}s)` : otpDispatched ? 'Resend OTP' : 'Send OTP'}
-                      </button>
-                    </div>
-                  </div>
-
-                  {otpDispatched && (
-                    <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 animate-in fade-in duration-200 space-y-2.5">
-                      <div className="flex items-center justify-between text-xs text-blue-900 font-semibold">
-                        <span className="flex items-center gap-1.5">
-                          <KeyRound className="w-3.5 h-3.5 text-blue-600" />
-                          Enter OTP received via SMS on Mobile:
-                        </span>
-                        <span className="text-[11px] text-blue-700 font-mono font-bold">+91 {mobileNumber}</span>
-                      </div>
-                      <p className="text-[11px] text-blue-800 leading-snug">
-                        📱 6-digit OTP aapke mobile number par SMS ke dwara bhej diya gaya hai. Kripya apna phone check karein.
-                      </p>
-
-                      <input
-                        type="text"
-                        required
-                        maxLength={6}
-                        value={otpCode}
-                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
-                        placeholder="••••••"
-                        className="w-full px-3 py-2 text-center font-mono tracking-widest text-xl font-black rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white"
-                      />
-                    </div>
-                  )}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  {activeTab === 'student' ? 'Registered Student Email or Student ID' : 'Authorized Chief Admin Email'}
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <input
+                    type="text"
+                    required
+                    autoComplete="off"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={
+                      activeTab === 'student' ? 'e.g. rahul@gmail.com or VVUC-2024-001' : 'e.g. admin@vvuc.edu.in'
+                    }
+                    className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#071129] focus:border-transparent font-medium"
+                  />
                 </div>
-              ) : (
-                <>
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
-                      {activeTab === 'student' ? 'Registered Student Email or Student ID' : 'Authorized Chief Admin Email'}
-                    </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                      <input
-                        type="text"
-                        required
-                        autoComplete="off"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder={
-                          activeTab === 'student' ? 'e.g. rahul@gmail.com or VVUC-2024-001' : 'e.g. admin@vvuc.edu.in'
-                        }
-                        className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#071129] focus:border-transparent font-medium"
-                      />
-                    </div>
-                  </div>
+              </div>
 
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-bold text-slate-700">Password</label>
-                      <button
-                        type="button"
-                        onClick={() => setIsForgotPassword(true)}
-                        className="text-[11px] text-[#071129] font-semibold hover:underline"
-                      >
-                        Forgot password?
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                      <input
-                        type="password"
-                        required
-                        autoComplete="new-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#071129] focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-slate-700">Password</label>
+                  <button
+                    type="button"
+                    onClick={() => setIsForgotPassword(true)}
+                    className="text-[11px] text-[#071129] font-semibold hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+                <div className="relative">
+                  <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <input
+                    type="password"
+                    required
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#071129] focus:border-transparent"
+                  />
+                </div>
+              </div>
 
               <div className="pt-2">
                 <button
