@@ -373,14 +373,17 @@ export const StudentVerificationModal: React.FC<Props> = ({
 
               {/* OTP Input Card when OTP is dispatched */}
               {otpSent && !isPhoneVerified && (
-                <div className="mt-2.5 p-3 rounded-xl bg-blue-50 border border-blue-200 animate-in fade-in duration-200 space-y-2">
+                <div className="mt-2.5 p-3.5 rounded-xl bg-blue-50 border border-blue-200 animate-in fade-in duration-200 space-y-2">
                   <div className="flex items-center justify-between text-xs text-blue-900 font-semibold">
                     <span className="flex items-center gap-1.5">
                       <KeyRound className="w-3.5 h-3.5 text-blue-600" />
-                      Enter 6-Digit SMS Code:
+                      SMS OTP Code:
                     </span>
-                    <span className="text-[11px] text-blue-700 font-mono">OTP Sent to +91 {formData.mobile}</span>
+                    <span className="text-[11px] text-blue-700 font-mono font-bold">+91 {formData.mobile}</span>
                   </div>
+                  <p className="text-[11px] text-blue-800">
+                    📱 6-digit OTP aapke mobile number par bhej diya gaya hai. Kripya SMS check karke yahan enter karein.
+                  </p>
 
                   <div className="flex items-center gap-2">
                     <input

@@ -350,14 +350,17 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
                   </div>
 
                   {otpDispatched && (
-                    <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 animate-in fade-in duration-200 space-y-2">
+                    <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 animate-in fade-in duration-200 space-y-2.5">
                       <div className="flex items-center justify-between text-xs text-blue-900 font-semibold">
                         <span className="flex items-center gap-1.5">
                           <KeyRound className="w-3.5 h-3.5 text-blue-600" />
-                          Enter 6-Digit OTP Received:
+                          Enter OTP received via SMS on Mobile:
                         </span>
-                        <span className="text-[11px] text-blue-700 font-mono">Mobile: +91 {mobileNumber}</span>
+                        <span className="text-[11px] text-blue-700 font-mono font-bold">+91 {mobileNumber}</span>
                       </div>
+                      <p className="text-[11px] text-blue-800 leading-snug">
+                        📱 6-digit OTP aapke mobile number par SMS ke dwara bhej diya gaya hai. Kripya apna phone check karein.
+                      </p>
 
                       <input
                         type="text"
@@ -365,8 +368,8 @@ export const LoginModal: React.FC<Props> = ({ isOpen, onClose, initialRole = 'st
                         maxLength={6}
                         value={otpCode}
                         onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
-                        placeholder="e.g. 123456"
-                        className="w-full px-3 py-2 text-center font-mono tracking-widest text-lg font-black rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white"
+                        placeholder="••••••"
+                        className="w-full px-3 py-2 text-center font-mono tracking-widest text-xl font-black rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white"
                       />
                     </div>
                   )}

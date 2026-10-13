@@ -5,7 +5,6 @@ import { LoginModal } from './components/landing/LoginModal';
 import { StudentVerificationModal } from './components/landing/StudentVerificationModal';
 import { BookCatalog } from './components/common/BookCatalog';
 import { BookDetailsModal } from './components/common/BookDetailsModal';
-import { SMSNotificationBanner } from './components/common/SMSNotificationBanner';
 
 // Student Components
 import { StudentNavbar } from './components/student/StudentNavbar';
@@ -352,8 +351,6 @@ const MainApp: React.FC = () => {
         </div>
       )}
 
-      {/* SMS OTP Notification Banner */}
-      <SMSNotificationBanner />
 
       {/* Global Modals */}
       <LoginModal

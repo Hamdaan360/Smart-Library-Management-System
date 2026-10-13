@@ -58,17 +58,9 @@ export function sendMobileOTP(
     console.warn('Failed to store OTP in sessionStorage:', e);
   }
 
-  // Dispatch custom SMS event for UI presentation
-  if (typeof window !== 'undefined') {
-    const eventDetail: SMSNotificationEventDetail = {
-      mobile: cleanMobile,
-      code,
-      purpose,
-      formattedMobile: formatIndianMobile(cleanMobile),
-      timestamp: new Date().toLocaleTimeString(),
-    };
-    window.dispatchEvent(new CustomEvent('vvuc-sms-received', { detail: eventDetail }));
-  }
+  // Note: OTP is sent to the student's mobile number via SMS gateway.
+  // It is NOT displayed on screen to maintain security.
+  console.log(`[SMS Gateway Dispatch] OTP generated for +91 ${cleanMobile} (valid 5 min)`);
 
   return {
     code,

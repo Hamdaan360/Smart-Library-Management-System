@@ -86,28 +86,30 @@ export const LandingPage: React.FC<Props> = ({
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-amber-400 selection:text-slate-950">
       {/* College Header Bar - Royal Navy & Gold */}
       <header className="bg-[#071129] border-b border-amber-500/25 sticky top-0 z-40 shadow-lg text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-[4.5rem] py-2 flex items-center justify-between gap-2">
           {/* Logo & College Identity */}
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0c1a40] via-[#10245a] to-[#081330] text-amber-300 flex items-center justify-center shadow-md border-2 border-amber-400/80 relative group">
-              <BookOpen className="w-6 h-6 text-amber-400 drop-shadow-sm" />
-              <span className="absolute -bottom-1 text-[8px] font-black uppercase tracking-tighter bg-amber-500 text-slate-950 px-1 rounded-sm leading-none">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-gradient-to-br from-[#0c1a40] via-[#10245a] to-[#081330] text-amber-300 flex items-center justify-center shadow-md border-2 border-amber-400/80 relative">
+              <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 drop-shadow-sm" />
+              <span className="absolute -bottom-1 text-[7px] sm:text-[8px] font-black uppercase tracking-tighter bg-amber-500 text-slate-950 px-1 rounded-xs leading-none">
                 VVUC
               </span>
             </div>
-            <div>
-              <span className="text-[11px] font-black uppercase tracking-widest text-amber-400 block leading-none mb-1">
+            <div className="min-w-0">
+              <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-amber-400 block leading-tight truncate">
                 Universal Education • Mumbai
               </span>
-              <h1 className="text-base sm:text-lg font-black text-white tracking-tight leading-none">
+              <h1 className="text-sm sm:text-lg font-black text-white tracking-tight leading-tight truncate">
                 Vidya Vikas Universal College
               </h1>
-              <p className="text-xs text-amber-200/80 font-medium">Smart Library Management System</p>
+              <p className="text-[10px] sm:text-xs text-amber-200/90 font-medium leading-tight truncate">
+                Smart Library Management System
+              </p>
             </div>
           </div>
 
           {/* Action CTAs */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             <button
               onClick={onSearchBooks}
               className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-amber-100 bg-[#0f2252] hover:bg-[#142d6c] border border-amber-500/20 transition-colors"
@@ -118,26 +120,26 @@ export const LandingPage: React.FC<Props> = ({
 
             <button
               onClick={onOpenStudentLogin}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-amber-300 bg-[#0c1b44] hover:bg-[#112660] border border-amber-400/40 transition-all flex items-center gap-1.5"
+              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold text-amber-300 bg-[#0c1b44] hover:bg-[#112660] border border-amber-400/40 transition-all flex items-center gap-1 sm:gap-1.5"
             >
-              <GraduationCap className="w-4 h-4 text-amber-400" />
-              <span className="hidden sm:inline">Student</span> Login
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+              <span className="hidden xs:inline">Student</span> Login
             </button>
 
             <button
               onClick={onOpenStudentSignup}
-              className="px-4 py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 hover:brightness-105 shadow-md shadow-amber-500/20 transition-all"
+              className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 hover:brightness-105 shadow-md shadow-amber-500/20 transition-all"
             >
               Sign Up
             </button>
 
             <button
               onClick={onOpenAdminLogin}
-              className="px-3 py-2 rounded-xl text-xs font-bold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/50 transition-all flex items-center gap-1.5"
+              className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/50 transition-all flex items-center gap-1 sm:gap-1.5"
               title="Chief Administrator Portal"
             >
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span className="hidden sm:inline">Admin</span>
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+              <span>Admin</span>
             </button>
           </div>
         </div>
@@ -145,9 +147,9 @@ export const LandingPage: React.FC<Props> = ({
 
       {/* Announcements Bar if any */}
       {announcements.length > 0 && (
-        <div className="bg-[#050b1c] border-b border-amber-500/30 px-4 py-2 text-xs text-amber-200 flex items-center justify-between">
+        <div className="bg-[#050b1c] border-b border-amber-500/30 px-3 sm:px-4 py-2 text-xs text-amber-200">
           <div className="max-w-7xl mx-auto w-full flex items-center gap-2">
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 uppercase tracking-wider shadow-xs">
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-black bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 uppercase tracking-wider shrink-0 shadow-xs">
               Notice
             </span>
             <span className="font-bold text-amber-300 truncate">{announcements[0].title}:</span>
@@ -157,27 +159,38 @@ export const LandingPage: React.FC<Props> = ({
       )}
 
       {/* Hero Section - Royal Navy Blue & Golden */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#050c1e] via-[#081538] to-[#071129] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-amber-500/20">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#050c1e] via-[#081538] to-[#071129] text-white py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 border-b border-amber-500/20">
         {/* Subtle grid background */}
         <div
           className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fbbf24_1px,transparent_1px)]"
           style={{ backgroundSize: '28px 28px' }}
         />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold backdrop-blur-xs shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            Empowering Academic Excellence • VVUC Central Library Resource Center
+        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-4 sm:space-y-6">
+          {/* Universal Education Institution Badge */}
+          <div className="inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-2 px-3.5 py-1.5 rounded-2xl sm:rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold backdrop-blur-xs shadow-xs max-w-full">
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>Universal Education • Mumbai</span>
+            </div>
+            <span className="hidden sm:inline text-amber-500/60">•</span>
+            <span className="text-[11px] sm:text-xs text-amber-200/90 font-medium">VVUC Central Library Resource Center</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-            Vidya Vikas Universal College
-            <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 drop-shadow-sm">
-              Smart Library Management System
-            </span>
-          </h2>
+          {/* College Main Title */}
+          <div className="space-y-2">
+            <div className="text-xs sm:text-sm uppercase tracking-widest font-black text-amber-400/90">
+              Universal Education • Mumbai
+            </div>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+              Vidya Vikas Universal College
+              <span className="block mt-2 sm:mt-3 text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-300 drop-shadow-sm text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black">
+                Smart Library Management System
+              </span>
+            </h2>
+          </div>
 
-          <p className="text-lg sm:text-xl font-bold text-amber-400 tracking-wider">
+          <p className="text-sm sm:text-lg font-bold text-amber-400 tracking-wider">
             ✦ Discover • Borrow • Learn ✦
           </p>
 
